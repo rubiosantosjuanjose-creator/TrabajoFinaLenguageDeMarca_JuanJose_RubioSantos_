@@ -1,0 +1,40 @@
+// Temática: Tienda de videojuegos
+
+// Importamos express
+const express = require("express");
+
+// Creamos la aplicación
+const app = express();
+
+// Puerto del servidor
+const PORT = 3000;
+
+// Middleware para leer JSON
+app.use(express.json());
+
+// Datos iniciales sobre algunos videojuegos
+let videojuegos = [
+    {
+        id: 1,
+        titulo: "The Legend of Zelda: Breath of the Wild",
+        genero: "Aventura",
+        plataforma: "Nintendo Switch",
+        precio: 45,
+        alquilerDisponible: true,
+        stock: 10,
+        descripcion: "Juego de exploración en mundo abierto",
+        clasificacion: "AAA"
+    },
+
+    {
+        id: 2,
+        titulo: "Minecraft",
+        genero: "Sandbox",
+        plataforma: "PC",
+        precio: 20,
+        alquilerDisponible: true,
+        stock: 15,
+        descripcion: "Juego de construcción y supervivencia",
+        clasificacion: "Indie"
+    }
+];

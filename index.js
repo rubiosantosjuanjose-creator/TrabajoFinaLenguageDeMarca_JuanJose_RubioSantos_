@@ -38,3 +38,17 @@ let videojuegos = [
         clasificacion: "Indie"
     }
 ];
+
+// Endpoint para obtener todos los videojuegos
+app.get("/videojuegos", (req, res) => {
+
+    res.json(videojuegos);
+
+});
+
+// Encendemos el servidor
+app.listen(PORT, () => {
+
+    console.log("Servidor iniciado en el puerto " + PORT);
+
+});

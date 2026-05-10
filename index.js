@@ -52,3 +52,26 @@ app.listen(PORT, () => {
     console.log("Servidor iniciado en el puerto " + PORT);
 
 });
+
+// Endpoint para obtener un videojuego por ID
+app.get("/videojuegos/:id", (req, res) => {
+
+    // Convertimos el parámetro a número
+    const id = parseInt(req.params.id);
+
+    // Buscamos el videojuego
+    const videojuego = videojuegos.find(v => v.id === id);
+
+    // Si no existe devolvemos error
+    if (!videojuego) {
+
+        return res.status(404).json({
+            error: "Videojuego no encontrado"
+        });
+
+    }
+
+    // Si existe devolvemos el videojuego
+    res.json(videojuego);
+
+});

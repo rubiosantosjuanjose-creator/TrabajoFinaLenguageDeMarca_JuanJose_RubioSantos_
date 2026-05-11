@@ -75,3 +75,37 @@ app.get("/videojuegos/:id", (req, res) => {
     res.json(videojuego);
 
 });
+
+// Endpoint para añadir videojuegos
+app.post("/videojuegos", (req, res) => {
+
+    let nuevoVideojuego = req.body;
+
+    // Comprobamos algunos datos importantes
+    if (
+        nuevoVideojuego.titulo == undefined ||
+        nuevoVideojuego.genero == undefined ||
+        nuevoVideojuego.plataforma == undefined
+    ) {
+
+        res.status(400).json({
+            error: "Faltan datos"
+        });
+
+    } else {
+
+        // Creamos un nuevo id
+        nuevoVideojuego.id = videojuegos.length + 1;
+
+        // Añadimos el videojuego
+        videojuegos.push(nuevoVideojuego);
+
+        // Mensaje de confirmacion
+        res.status(201).json({
+            mensaje: "Videojuego añadido",
+            datos: nuevoVideojuego
+        });
+
+    }
+
+});

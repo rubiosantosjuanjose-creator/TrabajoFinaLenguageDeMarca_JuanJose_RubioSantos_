@@ -109,3 +109,48 @@ app.post("/videojuegos", (req, res) => {
     }
 
 });
+
+// Endpoint para modificar videojuegos
+app.put("/videojuegos/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    let videojuegoEncontrado = null;
+
+    // Buscamos el videojuego
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        if (videojuegos[i].id === id) {
+
+            videojuegoEncontrado = videojuegos[i];
+
+        }
+
+    }
+
+    
+    if (videojuegoEncontrado == null) {
+
+        res.status(404).json({
+            error: "Videojuego no encontrado"
+        });
+
+    } else {
+
+        // Modificamos los datos
+        videojuegoEncontrado.titulo = req.body.titulo;
+        videojuegoEncontrado.genero = req.body.genero;
+        videojuegoEncontrado.plataforma = req.body.plataforma;
+        videojuegoEncontrado.precio = req.body.precio;
+        videojuegoEncontrado.stock = req.body.stock;
+
+        
+        res.status(200).json({
+            mensaje: "Videojuego modificado correctamente",
+            datos: videojuegoEncontrado
+        });
+
+    }
+
+});
+

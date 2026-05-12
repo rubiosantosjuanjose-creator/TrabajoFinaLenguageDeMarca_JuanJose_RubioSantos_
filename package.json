@@ -1,0 +1,24 @@
+{
+  "name": "trabajofinallenguagedemarca_juanjose_rubiosantos",
+  "version": "1.0.0",
+  "description": "Trabajo final de lenguaje de marca",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubiosantosjuanjose-creator/TrabajoFinaLenguageDeMarca_JuanJose_RubioSantos_.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rubiosantosjuanjose-creator/TrabajoFinaLenguageDeMarca_JuanJose_RubioSantos_/issues"
+  },
+  "homepage": "https://github.com/rubiosantosjuanjose-creator/TrabajoFinaLenguageDeMarca_JuanJose_RubioSantos_#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

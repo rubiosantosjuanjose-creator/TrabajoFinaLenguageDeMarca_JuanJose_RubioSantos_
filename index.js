@@ -153,4 +153,43 @@ app.put("/videojuegos/:id", (req, res) => {
     }
 
 });
+// Endpoint para borrar videojuegos
+app.delete("/videojuegos/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    let encontrado = false;
+
+    // Recorremos los videojuegos
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        
+        if (videojuegos[i].id == id) {
+
+            
+            videojuegos.splice(i, 1);
+
+            encontrado = true;
+
+        }
+
+    }
+
+    //Error si no se encuentra el videojuego
+    if (encontrado == false) {
+
+        res.status(404).json({
+            error: "No se encontro el videojuego"
+        });
+
+    } else {
+
+        // Mensaje de confirmacion
+        res.status(200).json({
+            mensaje: "Videojuego eliminado"
+        });
+
+    }
+
+});
 

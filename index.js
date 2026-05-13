@@ -46,11 +46,111 @@ app.get("/videojuegos", (req, res) => {
 
 });
 
-// Encendemos el servidor
-app.listen(PORT, () => {
 
-    console.log("Servidor iniciado en el puerto " + PORT);
+let resenas = [
 
+    {
+        id: 1,
+        videojuegoId: 1,
+        usuario: "Carlos",
+        comentario: "Muy divertido",
+        puntuacion: 9
+    }
+
+];
+
+// Endpoint para mostrar reseñas
+app.get("/resenas", (req, res) => {
+
+    res.json(resenas);
+
+});
+// Endpoint para añadir reseñas
+app.post("/resenas", (req, res) => {
+
+    let nuevaResena = req.body;
+
+    
+    if (
+        nuevaResena.usuario == undefined || nuevaResena.comentario == undefined
+    ) {
+
+        res.status(400).json({
+            error: "Faltan datos"
+        });
+
+    } else {
+
+        // Creamos id
+        nuevaResena.id = resenas.length + 1;
+
+        // Guardamos reseña
+        resenas.push(nuevaResena);
+
+        // Mensaje
+        res.status(201).json({
+            mensaje: "Reseña añadida"
+        });
+
+    }
+
+});
+
+// Endpoint para borrar reseñas
+app.delete("/resenas/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    let borrada = false;
+
+    // Recorremos reseñas
+    for (let i = 0; i < resenas.length; i++) {
+
+        if (resenas[i].id == id) {
+
+            // Borramos
+            resenas.splice(i, 1);
+
+            borrada = true;
+
+        }
+
+    }
+
+    // Si no existe
+    if (borrada == false) {
+
+        res.status(404).json({
+            error: "No existe la reseña"
+        });
+
+    } else {
+
+        res.status(200).json({
+            mensaje: "Reseña borrada"
+        });
+
+    }
+
+});
+// Endpoint para ver reseñas de un videojuego
+app.get("/videojuegos/:id/resenas", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    let resultado = [];
+
+    // Recorremos reseñas
+    for (let i = 0; i < resenas.length; i++) {
+
+        if (resenas[i].videojuegoId == id) {
+
+            resultado.push(resenas[i]);
+
+        }
+
+    }
+    res.json(resultado);
 });
 
 // Endpoint para obtener un videojuego por ID
@@ -193,3 +293,9 @@ app.delete("/videojuegos/:id", (req, res) => {
 
 });
 
+// Encendemos el servidor
+app.listen(PORT, () => {
+
+    console.log("Servidor iniciado en el puerto " + PORT);
+
+});

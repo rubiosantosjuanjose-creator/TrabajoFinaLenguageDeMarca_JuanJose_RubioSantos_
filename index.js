@@ -18,7 +18,7 @@ let videojuegos = [
         titulo: "The Legend of Zelda: Breath of the Wild",
         genero: "Aventura",
         plataforma: "Nintendo Switch",
-        precio: 45,
+        precio: 70,
         alquilerDisponible: true,
         stock: 10,
         descripcion: "Juego de exploración en mundo abierto",
@@ -30,7 +30,7 @@ let videojuegos = [
         titulo: "Minecraft",
         genero: "Sandbox",
         plataforma: "PC",
-        precio: 20,
+        precio: 25,
         alquilerDisponible: false,
         stock: 15,
         descripcion: "Juego de construcción y supervivencia",
@@ -94,6 +94,8 @@ app.post("/resenas", (req, res) => {
 
     
     if (
+        nuevaResena.usuario == undefined || nuevaResena.comentario == undefined ||
+        nuevaResena.comentario == undefined || nuevaResena.puntuacion == undefined
     ) {
 
         res.status(400).json({
@@ -201,6 +203,12 @@ app.post("/videojuegos", (req, res) => {
     if (
         nuevoVideojuego.titulo == undefined ||
         nuevoVideojuego.genero == undefined ||
+        nuevoVideojuego.plataforma == undefined ||
+        nuevoVideojuego.precio == undefined ||
+        nuevoVideojuego.alquilerDisponible == undefined ||
+        nuevoVideojuego.stock == undefined ||
+        nuevoVideojuego.descripcion == undefined ||
+        nuevoVideojuego.clasificacion == undefined
     ) {
 
         res.status(400).json({
@@ -390,6 +398,28 @@ app.get("/Nodisponibles", (req, res) => {
 
     }
     res.json(juegosnoDisponibles);
+
+});
+// Filtro por precio entre dos valores
+app.get("/precio", (req,res)=>{
+
+    let precioMin = parseInt(req.query.min);
+    let precioMax = parseInt(req.query.max);
+
+    let resultado = [];
+
+    for(let i=0;i<videojuegos.length;i++){
+
+        
+        if(videojuegos[i].precio >= precioMin && videojuegos[i].precio <= precioMax){
+
+            resultado.push(videojuegos[i]);
+
+        }
+
+    }
+
+    res.json(resultado);
 
 });
 // Aqui es donde se enciende el servidor

@@ -32,10 +32,23 @@ let videojuegos = [
         genero: "Sandbox",
         plataforma: "PC",
         precio: 20,
-        alquilerDisponible: true,
+        alquilerDisponible: false,
         stock: 15,
         descripcion: "Juego de construcción y supervivencia",
         clasificacion: "Indie"
+    },
+
+    {
+        id: 3,
+        titulo: "Persona 5 Royal",
+        genero: "JRPG",
+        plataforma: "PC",
+        precio: 30,
+        alquilerDisponible: true,
+        stock: 15,
+        descripcion: "Juego jrpg con elementos de simulación social",
+        clasificacion: "AAA"
+
     }
 ];
 
@@ -47,6 +60,7 @@ app.get("/videojuegos", (req, res) => {
 });
 
 
+// Algunas reseñas
 let resenas = [
 
     {
@@ -55,7 +69,17 @@ let resenas = [
         usuario: "Carlos",
         comentario: "Muy divertido",
         puntuacion: 9
+    },
+
+    {
+        id: 2,
+        videojuegoId: 2,
+        usuario: "Luis",
+        comentario: "Un juego muy entretenido",
+        puntuacion: 7.5
     }
+
+
 
 ];
 
@@ -82,12 +106,15 @@ app.post("/resenas", (req, res) => {
     } else {
 
         // Creamos id
+        
         nuevaResena.id = resenas.length + 1;
 
         // Guardamos reseña
+        
         resenas.push(nuevaResena);
 
         // Mensaje
+        
         res.status(201).json({
             mensaje: "Reseña añadida"
         });
@@ -104,11 +131,13 @@ app.delete("/resenas/:id", (req, res) => {
     let borrada = false;
 
     // Recorremos reseñas
+    
     for (let i = 0; i < resenas.length; i++) {
 
         if (resenas[i].id == id) {
 
             // Borramos
+            
             resenas.splice(i, 1);
 
             borrada = true;
@@ -118,6 +147,7 @@ app.delete("/resenas/:id", (req, res) => {
     }
 
     // Si no existe
+   
     if (borrada == false) {
 
         res.status(404).json({
@@ -141,6 +171,7 @@ app.get("/videojuegos/:id/resenas", (req, res) => {
     let resultado = [];
 
     // Recorremos reseñas
+    
     for (let i = 0; i < resenas.length; i++) {
 
         if (resenas[i].videojuegoId == id) {
@@ -156,13 +187,12 @@ app.get("/videojuegos/:id/resenas", (req, res) => {
 // Endpoint para obtener un videojuego por ID
 app.get("/videojuegos/:id", (req, res) => {
 
-    // Convertimos el parámetro a número
-    const id = parseInt(req.params.id);
-
     // Buscamos el videojuego
-    const videojuego = videojuegos.find(v => v.id === id);
+     const id = parseInt(req.params.id);
+     const videojuego = videojuegos.find(v => v.id === id);
 
     // Si no existe devolvemos error
+    
     if (!videojuego) {
 
         return res.status(404).json({
@@ -182,6 +212,7 @@ app.post("/videojuegos", (req, res) => {
     let nuevoVideojuego = req.body;
 
     // Comprobamos algunos datos importantes
+    
     if (
         nuevoVideojuego.titulo == undefined ||
         nuevoVideojuego.genero == undefined ||
@@ -195,12 +226,15 @@ app.post("/videojuegos", (req, res) => {
     } else {
 
         // Creamos un nuevo id
+        
         nuevoVideojuego.id = videojuegos.length + 1;
 
         // Añadimos el videojuego
+        
         videojuegos.push(nuevoVideojuego);
 
         // Mensaje de confirmacion
+       
         res.status(201).json({
             mensaje: "Videojuego añadido",
             datos: nuevoVideojuego
@@ -217,7 +251,7 @@ app.put("/videojuegos/:id", (req, res) => {
 
     let videojuegoEncontrado = null;
 
-    // Buscamos el videojuego
+    
     for (let i = 0; i < videojuegos.length; i++) {
 
         if (videojuegos[i].id === id) {
@@ -238,6 +272,7 @@ app.put("/videojuegos/:id", (req, res) => {
     } else {
 
         // Modificamos los datos
+        
         videojuegoEncontrado.titulo = req.body.titulo;
         videojuegoEncontrado.genero = req.body.genero;
         videojuegoEncontrado.plataforma = req.body.plataforma;
@@ -254,6 +289,7 @@ app.put("/videojuegos/:id", (req, res) => {
 
 });
 // Endpoint para borrar videojuegos
+// Endpoint para eliminar videojuegos
 app.delete("/videojuegos/:id", (req, res) => {
 
     const id = parseInt(req.params.id);
@@ -274,7 +310,6 @@ app.delete("/videojuegos/:id", (req, res) => {
         }
 
     }
-
     //Error si no se encuentra el videojuego
     if (encontrado == false) {
 
@@ -285,6 +320,7 @@ app.delete("/videojuegos/:id", (req, res) => {
     } else {
 
         // Mensaje de confirmacion
+        
         res.status(200).json({
             mensaje: "Videojuego eliminado"
         });
@@ -294,6 +330,93 @@ app.delete("/videojuegos/:id", (req, res) => {
 });
 
 // Encendemos el servidor
+// Endpoint para buscar por genero
+app.get("/genero", (req, res) => {
+
+    let genero = req.query.genero;
+
+    let resultado = [];
+
+    
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        
+        if (videojuegos[i].genero == genero) {
+
+            resultado.push(videojuegos[i]);
+
+        }
+
+    }
+
+    
+    res.json(resultado);
+
+});
+
+// Endpoint para buscar por plataforma
+app.get("/plataforma", (req, res) => {
+
+    let plataforma = req.query.plataforma;
+
+    let resultado = [];
+
+    
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        a
+        if (videojuegos[i].plataforma == plataforma) {
+
+            resultado.push(videojuegos[i]);
+
+        }
+
+    }
+
+    
+    res.json(resultado);
+
+});
+
+// Endpoint para ver videojuegos disponibles
+app.get("/disponibles", (req, res) => {
+
+    let juegosDisponibles = [];
+
+    
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        
+        if (videojuegos[i].alquilerDisponible == true) {
+
+            juegosDisponibles.push(videojuegos[i]);
+
+        }
+
+    }
+    res.json(juegosDisponibles);
+
+});
+// Endpoint para ver videojuegos no disponibles
+app.get("/Nodisponibles", (req, res) => {
+
+    let juegosnoDisponibles = [];
+
+    
+    for (let i = 0; i < videojuegos.length; i++) {
+
+        
+        if (videojuegos[i].alquilerDisponible == false) {
+
+            juegosnoDisponibles.push(videojuegos[i]);
+
+        }
+
+    }
+    res.json(juegosnoDisponibles);
+
+});
+// Aqui es donde se enciende el servidor
 app.listen(PORT, () => {
 
     console.log("Servidor iniciado en el puerto " + PORT);

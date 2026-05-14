@@ -9,7 +9,6 @@ const app = express();
 // Puerto del servidor
 const PORT = 3000;
 
-// Middleware para leer JSON
 app.use(express.json());
 
 // Datos iniciales sobre algunos videojuegos
@@ -59,7 +58,6 @@ app.get("/videojuegos", (req, res) => {
 
 });
 
-
 // Algunas reseñas
 let resenas = [
 
@@ -96,7 +94,6 @@ app.post("/resenas", (req, res) => {
 
     
     if (
-        nuevaResena.usuario == undefined || nuevaResena.comentario == undefined
     ) {
 
         res.status(400).json({
@@ -105,15 +102,12 @@ app.post("/resenas", (req, res) => {
 
     } else {
 
-        // Creamos id
         
         nuevaResena.id = resenas.length + 1;
 
-        // Guardamos reseña
         
         resenas.push(nuevaResena);
 
-        // Mensaje
         
         res.status(201).json({
             mensaje: "Reseña añadida"
@@ -130,13 +124,11 @@ app.delete("/resenas/:id", (req, res) => {
 
     let borrada = false;
 
-    // Recorremos reseñas
     
     for (let i = 0; i < resenas.length; i++) {
 
         if (resenas[i].id == id) {
 
-            // Borramos
             
             resenas.splice(i, 1);
 
@@ -146,7 +138,6 @@ app.delete("/resenas/:id", (req, res) => {
 
     }
 
-    // Si no existe
    
     if (borrada == false) {
 
@@ -170,7 +161,6 @@ app.get("/videojuegos/:id/resenas", (req, res) => {
 
     let resultado = [];
 
-    // Recorremos reseñas
     
     for (let i = 0; i < resenas.length; i++) {
 
@@ -187,11 +177,9 @@ app.get("/videojuegos/:id/resenas", (req, res) => {
 // Endpoint para obtener un videojuego por ID
 app.get("/videojuegos/:id", (req, res) => {
 
-    // Buscamos el videojuego
      const id = parseInt(req.params.id);
      const videojuego = videojuegos.find(v => v.id === id);
 
-    // Si no existe devolvemos error
     
     if (!videojuego) {
 
@@ -200,8 +188,6 @@ app.get("/videojuegos/:id", (req, res) => {
         });
 
     }
-
-    // Si existe devolvemos el videojuego
     res.json(videojuego);
 
 });
@@ -211,12 +197,10 @@ app.post("/videojuegos", (req, res) => {
 
     let nuevoVideojuego = req.body;
 
-    // Comprobamos algunos datos importantes
     
     if (
         nuevoVideojuego.titulo == undefined ||
         nuevoVideojuego.genero == undefined ||
-        nuevoVideojuego.plataforma == undefined
     ) {
 
         res.status(400).json({
@@ -225,15 +209,12 @@ app.post("/videojuegos", (req, res) => {
 
     } else {
 
-        // Creamos un nuevo id
         
         nuevoVideojuego.id = videojuegos.length + 1;
 
-        // Añadimos el videojuego
         
         videojuegos.push(nuevoVideojuego);
 
-        // Mensaje de confirmacion
        
         res.status(201).json({
             mensaje: "Videojuego añadido",
@@ -271,7 +252,6 @@ app.put("/videojuegos/:id", (req, res) => {
 
     } else {
 
-        // Modificamos los datos
         
         videojuegoEncontrado.titulo = req.body.titulo;
         videojuegoEncontrado.genero = req.body.genero;
@@ -288,7 +268,6 @@ app.put("/videojuegos/:id", (req, res) => {
     }
 
 });
-// Endpoint para borrar videojuegos
 // Endpoint para eliminar videojuegos
 app.delete("/videojuegos/:id", (req, res) => {
 
@@ -310,7 +289,6 @@ app.delete("/videojuegos/:id", (req, res) => {
         }
 
     }
-    //Error si no se encuentra el videojuego
     if (encontrado == false) {
 
         res.status(404).json({
@@ -319,7 +297,6 @@ app.delete("/videojuegos/:id", (req, res) => {
 
     } else {
 
-        // Mensaje de confirmacion
         
         res.status(200).json({
             mensaje: "Videojuego eliminado"
@@ -329,7 +306,6 @@ app.delete("/videojuegos/:id", (req, res) => {
 
 });
 
-// Encendemos el servidor
 // Endpoint para buscar por genero
 app.get("/genero", (req, res) => {
 
